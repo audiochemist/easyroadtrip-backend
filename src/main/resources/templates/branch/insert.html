@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="template/template :: head">
+    <meta charset="UTF-8">
+    <title>Insert branch</title>
+
+</head>
+<body>
+<header th:replace="template/template :: header"> </header>
+<div class="container">
+    <br>
+    <h1 th:text="${title}"></h1>
+</div>
+<div class="container">
+    <br>
+    <form th:action="@{/branch/insert}" th:object="${branch}" method="post">
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Name" value="n@me">
+                    <label for="name">Branch name</label>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
+                           th:errors="*{name}"></small>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="text" th:field="*{country}" class="form-control" id="country" placeholder="Country" value="Country">
+                    <label for="country">Branch country</label>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('country')}"
+                           th:errors="*{country}"></small>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <input type="submit" class="btn btn-primary" value="Insert"/>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Country</th>
+            <th scope="col">Type</th>
+            <th scope="col">View</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="branch:${branches}">
+            <td th:text="${branch.id}"></td>
+            <td th:text="${branch.name}"></td>
+            <td th:text="${branch.country}"></td>
+            <td th:text="${branch.type}"></td>
+            <td><a class="btn btn-info btn-sm" th:href="@{getOne/} + ${branch.id}"
+                   th:text="'View'" title="View">
+            </a>
+            </td>
+            <td><a class="btn btn-success btn-sm" th:href="@{edit/} + ${branch.id}"
+                   th:text="'Edit'" title="Edit">
+            </a>
+            </td>
+            <td><a class="btn btn-danger btn-sm" th:href="@{delete/} + ${branch.id}"
+                   th:text="'Delete'" title="Delete"
+                   onclick="return confirm('Are you sure?');">
+            </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+<footer th:replace="template/template :: footer"> </footer>
+</body>
+</html>
